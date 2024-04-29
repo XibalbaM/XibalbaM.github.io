@@ -48,11 +48,11 @@ operator fun <K : Any, V : Any> MapProperty<K, V>.get(key: K) = getting(key)
 val blogInputDir = layout.projectDirectory.dir("src/jsMain/resources/markdown/articles")
 
 val downloadDataTask = tasks.register("downloadData") {
-    val file = layout.buildDirectory.file("generated/xibalba/src/jsMain/kotlin/fr/xibalba/data/Data.kt").get().asFile
+    val file = layout.buildDirectory.file("generated/xibalba/src/jsMain/kotlin/fr/xibalba/portfolio/data/Data.kt").get().asFile
     outputs.dir(file.parentFile)
 
     doLast {
-        val dataLink = "https://raw.githubusercontent.com/XibalbaM/XibalbaM.github.io/api/result.json"
+        /*val dataLink = "https://raw.githubusercontent.com/XibalbaM/XibalbaM.github.io/api/result.json"
         val url = URL(dataLink)
         val connection = url.openConnection() as HttpURLConnection
         connection.requestMethod = "GET"
@@ -60,13 +60,13 @@ val downloadDataTask = tasks.register("downloadData") {
         val responseCode = connection.responseCode
         if (responseCode != 200) {
             throw Exception("Error while downloading data, response code: $responseCode")
-        }
+        }*/
 
-        var data = connection.inputStream.readBytes().decodeToString()
+        var data = /*connection.inputStream.readBytes().decodeToString()*/ ""
         data = data.replace(Regex("\\$"), "\\\${\"\\$\"}")
         val tripleQuotes = "\"\"\""
         val kotlinOutput = """
-			package io.github.ayfri.data
+			package fr.xibalba.portfolio.data
 			
 			const val rawData = $tripleQuotes$data$tripleQuotes
 		""".trimIndent()
@@ -209,8 +209,8 @@ data class BlogEntry(
 fun String.escapeQuotes() = this.replace("\"", "\\\"")
 
 val generateBlogSourceTask = task("generateBlogSource") {
-    group = "io/github/ayfri"
-    val blogGenDir = layout.buildDirectory.dir("generated/ayfri/src/jsMain/kotlin").get()
+    group = "fr/xibalba"
+    val blogGenDir = layout.buildDirectory.dir("generated/xibalba/src/jsMain/kotlin").get()
     blogInputDir.asFile.mkdirs()
 
     inputs.dir(blogInputDir)
@@ -269,12 +269,12 @@ val generateBlogSourceTask = task("generateBlogSource") {
                     """
 					|// This file is generated. Modify the build script if you need to change it.
 					|
-					|package io.github.ayfri
+					|package fr.xibalba.portfolio.data"""/*
 					|
 					|import io.github.ayfri.components.ArticleEntry
 					|
 					|val articlesEntries = listOf${if (blogEntries.isEmpty()) "<ArticleEntry>" else ""}(
-                    """.trimMargin()
+                    """*/.trimMargin()
                 )
 
                 fun List<String>.asCode() = "listOf(${joinToString { "\"$it\"" }})"
@@ -293,7 +293,7 @@ val generateBlogSourceTask = task("generateBlogSource") {
                     )
                 }
 
-                appendLine(")")
+                /*appendLine(")")*/
             })
 
             println("Generated $absolutePath")
