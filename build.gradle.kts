@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kobweb.application)
     alias(libs.plugins.kobwebx.markdown)
-    alias(libs.plugins.kotlinx.serialization)
 }
 
 group = "fr.xibalba"
@@ -95,6 +94,8 @@ kotlin {
                 implementation(compose.html.core)
                 implementation(compose.runtime)
                 implementation(libs.kobweb.core)
+                implementation(libs.kobweb.silk)
+                implementation(libs.kobwebx.markdown)
                 implementation(libs.kotlinx.wrappers.browser)
 
                 implementation(npm("marked", project.extra["npm.marked.version"].toString()))
