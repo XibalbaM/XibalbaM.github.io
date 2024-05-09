@@ -1,6 +1,5 @@
 package fr.xibalba.portfolio.pages
 
-import CommonText
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -12,13 +11,13 @@ import org.jetbrains.compose.web.css.AlignItems
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text
 
-@Page("/index")
+@Page("/dummy")
 @Composable
-fun Index() {
-    PageLayout("Home") {
+fun Dummy() {
+    PageLayout("Dummy") {
         Column(Modifier.fillMaxWidth().alignItems(AlignItems.Center)) {
             H1 {
-                Text(CommonText.title("Home", "Xibalba"))
+                Text("Dummy page")
             }
         }
     }

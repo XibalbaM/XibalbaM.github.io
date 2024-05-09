@@ -32,7 +32,7 @@ val MainTheme by ComponentStyle.base {
 fun PageLayout(title: String, content: @Composable () -> Unit) {
     setTitle(CommonText.title(title,AppGlobals["author"] ?: throw IllegalStateException("Author not set")))
 
-    Header()
+    Header(routes = setOf("/" to "Home", "/dummy" to "Dummy"))
     Main(MainTheme.toAttrs()) {
         content()
     }
