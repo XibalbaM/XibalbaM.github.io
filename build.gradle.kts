@@ -1,6 +1,10 @@
+import com.google.devtools.ksp.gradle.KspTaskJS
 import com.varabyte.kobweb.gradle.application.util.configAsKobwebApplication
+import de.comahe.i18n4k.gradle.plugin.i18n4k
 import kotlinx.html.*
 import org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile
+
+val languages = listOf("en", "fr")
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -8,6 +12,7 @@ plugins {
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kobweb.application)
     alias(libs.plugins.kobwebx.markdown)
+    alias(libs.plugins.comahe.i18n)
 }
 
 group = "fr.xibalba"
@@ -39,6 +44,7 @@ kobweb {
             globals["author"] = author
             globals["description"] = description
             globals["url"] = url
+            globals["languages"] = languages.joinToString(",")
 
             this.description = description
 
@@ -96,7 +102,10 @@ kotlin {
                 implementation(libs.kobweb.core)
                 implementation(libs.kobweb.silk)
                 implementation(libs.kobwebx.markdown)
+                implementation(libs.silk.icons.mdi)
+                implementation(libs.silk.icons.fa)
                 implementation(libs.kotlinx.wrappers.browser)
+                implementation(libs.comahe.i18n)
 
                 implementation(npm("marked", project.extra["npm.marked.version"].toString()))
             }
@@ -104,8 +113,17 @@ kotlin {
     }
 }
 
+i18n4k {
+    sourceCodeLocales = languages
+    inputDirectory = "src/jsMain/i18n"
+}
+
 tasks.withType<KotlinJsCompile>().configureEach {
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xklib-enable-signature-clash-checks=false",
     )
+}
+
+tasks.withType<KspTaskJS>().configureEach {
+    dependsOn("generateI18n4kFiles")
 }
