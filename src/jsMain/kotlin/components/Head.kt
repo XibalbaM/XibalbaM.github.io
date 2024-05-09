@@ -15,7 +15,6 @@ import org.w3c.dom.asList
 fun selectAll(selector: String) = document.querySelectorAll(selector).asList().unsafeCast<List<HTMLElement>>()
 
 fun setTitle(title: String) = renderComposable(document.head!!) {
-    println(title)
     selectAll("meta[property*=title]").forEach(HTMLElement::remove)
     document.querySelector("title")?.remove()
 
