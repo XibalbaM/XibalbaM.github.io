@@ -34,17 +34,14 @@ val HeaderStyle by ComponentStyle.base {
 fun Header(modifier: Modifier = Modifier, variant: ComponentVariant? = null) {
     val finalModifier = HeaderStyle.toModifier(variant).then(modifier)
     var theme by ColorMode.currentState
-    val ctx = rememberPageContext()
     Row(finalModifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End) {
         Button(onClick = {
             switchLocale()
-            ctx.router.navigateTo(ctx.route.path)
         }) {
             Text(locale.uppercase())
         }
         Button(onClick = {
             theme = theme.opposite
-            println("Switching theme to ${theme.name}")
         }) {
             if (theme.isLight) {
                 MdiDarkMode()
