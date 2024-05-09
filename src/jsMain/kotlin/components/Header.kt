@@ -44,6 +44,7 @@ fun Header(modifier: Modifier = Modifier, variant: ComponentVariant? = null) {
         }
         Button(onClick = {
             theme = theme.opposite
+            println("Switching theme to ${theme.name}")
         }) {
             if (theme.isLight) {
                 MdiDarkMode()
