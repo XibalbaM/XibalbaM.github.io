@@ -4,6 +4,7 @@ yarn.lock
 
 ### IntelliJ IDEA ###
 .idea/
+*.iml
 
 ### Kobweb ###
 .kobweb/*
